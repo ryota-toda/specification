@@ -7,12 +7,13 @@
  *note:         備考
  * */
 export interface Description {
-  id: number;
-  name: string | null;
-  type: string | null;
-  displayData: string | null;
-  displayEvent: string | null;
-  note: string | null;
+  id: number
+  name: string | null
+  type: string | null
+  displayData: string | null
+  displayEvent: string | null
+  note: string | null
+  [key: string]: string | number | null
 }
 
 /**
@@ -24,10 +25,11 @@ export interface Description {
  *updated:  更新日
  * */
 export interface Field {
-  id: string;
-  name: string;
-  creator: string;
-  created: Date;
-  updater: string;
-  updated: Date;
+  id: string
+  name: string
+  creator: string
+  created: Date
+  updater: string
+  updated: Date
+  [key: string]: string | Date
 }
