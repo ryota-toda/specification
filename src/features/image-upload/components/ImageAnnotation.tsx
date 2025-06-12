@@ -20,7 +20,7 @@ export const ImageAnnotation = ({ imageUrl }: ImageAnnotationProps) => {
   return (
     <div
       ref={containerRef}
-      className=" relative w-full h-full"
+      className=" relative w-full h-full object-contains"
       onClick={addMarker}
     >
       <img

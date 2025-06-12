@@ -29,9 +29,9 @@ export const ImageAnnotatorContainer: FC<ImageAnnotatorContainerProps> = ({
     <div
       className={clsx(
         "flex items-center justify-center",
-        "rounded-lg border-2 border-dashed border-gray-300 dark:border-gray-700",
-        width,
-        height,
+        "rounded border-2 border border-gray-300 dark:border-gray-700",
+        imageUrl ? "w-fit" : width,
+        imageUrl ? "h-fit" : height,
         className,
       )}
     >
