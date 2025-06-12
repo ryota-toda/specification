@@ -1,19 +1,13 @@
-"use client";
+'use client'
 
-import { Label } from "@/components/ui/label";
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarHeader,
-} from "@/components/ui/sidebar";
-import { Switch } from "@/components/ui/switch";
-import { markModeAtom } from "@/lib/jotai/atom";
-import { useSetAtom } from "jotai";
+import { Label } from '@/components/ui/label'
+import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from '@/components/ui/sidebar'
+import { Switch } from '@/components/ui/switch'
+import { markModeAtom } from '@/lib/jotai/atom'
+import { useSetAtom } from 'jotai'
 
 const CustomSidebar = () => {
-  const setMarkMode = useSetAtom(markModeAtom);
+  const setMarkMode = useSetAtom(markModeAtom)
   return (
     <Sidebar>
       <SidebarHeader>qwerty</SidebarHeader>
@@ -29,7 +23,7 @@ const CustomSidebar = () => {
         </div>
       </SidebarFooter>
     </Sidebar>
-  );
-};
+  )
+}
 
-export default CustomSidebar;
+export default CustomSidebar
