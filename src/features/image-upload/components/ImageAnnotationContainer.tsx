@@ -1,10 +1,9 @@
 'use client'
 
-import { FC, useState, useCallback } from 'react'
+import { FC, useState } from 'react'
 import clsx from 'clsx'
 import { ImageSelector } from './ImageSelector'
 import { ImageAnnotation } from './ImageAnnotation'
-import { Marker } from '@/features/image-upload/types/marker'
 
 interface ImageAnnotatorContainerProps {
   width?: string
@@ -18,11 +17,6 @@ export const ImageAnnotatorContainer: FC<ImageAnnotatorContainerProps> = ({
   className,
 }) => {
   const [imageUrl, setImageUrl] = useState<string | undefined>(null)
-
-  const handleMarkersChange = useCallback((markers: Marker[]) => {
-    setCurrentMarkers(markers)
-  }, [])
-
   const handleAddImage = (url: string) => setImageUrl(url)
 
   return (
@@ -35,11 +29,7 @@ export const ImageAnnotatorContainer: FC<ImageAnnotatorContainerProps> = ({
         className,
       )}
     >
-      {!imageUrl ? (
-        <ImageSelector onImageSelect={handleAddImage} />
-      ) : (
-        <ImageAnnotation imageUrl={imageUrl} onMarkersChange={handleMarkersChange} />
-      )}
+      {!imageUrl ? <ImageSelector onImageSelect={handleAddImage} /> : <ImageAnnotation imageUrl={imageUrl} />}
     </div>
   )
 }
