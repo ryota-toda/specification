@@ -1,26 +1,47 @@
-import { Description } from "@/features/description/types/description";
-import clsx from "clsx";
-import { FC } from "react";
+'use client'
 
-interface DescriptionTableProps {
-  dataArr: Description[] | [];
-}
+import { Drawer, DrawerTrigger } from '@/components/ui/drawer'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
+import { CustomDrawerContents } from '@/features/description/components/CustomDrawerContents'
+import { Fragment } from 'react'
 
-export const DescriptionTable: FC<DescriptionTableProps> = ({ dataArr }) => {
-  console.log(dataArr);
+export const DescriptionTable = <T extends Record<string, string | number | undefined>>({
+  header,
+  arr,
+}: {
+  header: string[]
+  arr: T[]
+}) => {
+  if (!arr || arr.length === 0) return <></>
+
+  const keys = Object.keys(arr[0]) as Array<keyof T>
 
   return (
-    <>
-      {dataArr.map((item) => (
-        <div key={item?.id ?? 0} className={clsx("flex gap-4 justify-between")}>
-          <p>{item?.id}</p>
-          <p>{item?.name}</p>
-          <p>{item?.type}</p>
-          <p>{item?.displayData}</p>
-          <p>{item?.displayEvent}</p>
-          <p>{item?.note}</p>
-        </div>
-      ))}
-    </>
-  );
-};
+    <Drawer direction="right">
+      <Table>
+        <TableHeader>
+          <TableRow>
+            {header.map((key, index) => (
+              <TableHead key={index}>{String(key)}</TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>
+          {arr.map((item, index) => (
+            <Fragment key={index}>
+              <TableRow>
+                {keys.map((key, i) => (
+                  <DrawerTrigger asChild key={i}>
+                    <TableCell key={`${index}_${String(key)}`}>{String(item[key])}</TableCell>
+                  </DrawerTrigger>
+                ))}
+              </TableRow>
+              <CustomDrawerContents data={item} />
+            </Fragment>
+          ))}
+        </TableBody>
+      </Table>
+    </Drawer>
+  )
+}
