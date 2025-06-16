@@ -7,6 +7,8 @@ import ImageAnnotatorContainer from '@/features/image-upload/components/ImageAnn
 import { useCallback, useEffect } from 'react'
 import { useAtom, useAtomValue } from 'jotai'
 import { descriptionArrAtom, markersAtom } from '@/lib/jotai/atom'
+import { ExportButton } from '@/features/export-xlsx/components/ExportButton'
+import clsx from 'clsx'
 
 // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
 
@@ -52,6 +54,11 @@ export default function Home() {
       <div className="px-6">
         <DescriptionTable header={header} arr={descriptions} />
       </div>
+      {descriptions.length > 0 && (
+        <div className={clsx('flex justify-end')}>
+          <ExportButton />
+        </div>
+      )}
     </div>
   )
 }
