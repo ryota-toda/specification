@@ -7,7 +7,7 @@ import { markersAtom } from '@/lib/jotai/atom'
 import { useAtomValue } from 'jotai'
 import { useRef } from 'react'
 
-interface ImageAnnotationProps {
+type ImageAnnotationProps = {
   imageUrl: string
   onMarkersChange: (markers: Marker[]) => void
 }
