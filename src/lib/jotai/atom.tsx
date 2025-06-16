@@ -5,4 +5,6 @@ export const markModeAtom = atom<boolean>(false)
 
 export const markersAtom = atom<Marker[]>([])
 
-export const descriptionAtom = atom<Description[]>([])
+export const descriptionAtom = atom<Description>()
+
+export const descriptionArrAtom = atom<Description[]>([])

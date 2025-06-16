@@ -1,6 +1,6 @@
 import { ChangeEvent, useCallback, useState } from 'react'
 
-interface UseImageReturn {
+type UseImageReturn = {
   imageUrl?: string
   addImage: (e: ChangeEvent<HTMLInputElement>) => void
 }
