@@ -6,7 +6,7 @@ export type Marker = {
 
 /**
  *id:           項目ID
- *markerId      interface Merkerのid
+ *markerId      type Markerのid
  *name:         項目名
  *type:         型
  *displayData:  表示データ

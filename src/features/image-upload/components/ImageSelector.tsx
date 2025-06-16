@@ -3,7 +3,7 @@
 import clsx from 'clsx'
 import { ChangeEvent, FC, useCallback, useRef } from 'react'
 
-interface ImageSelectorProps {
+type ImageSelectorProps = {
   onImageSelect: (url: string) => void
 }
 

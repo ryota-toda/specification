@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import { ImageSelector } from './ImageSelector'
 import { ImageAnnotation } from './ImageAnnotation'
 
-interface ImageAnnotatorContainerProps {
+type ImageAnnotatorContainerProps = {
   width?: string
   height?: string
   className?: string
