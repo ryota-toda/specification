@@ -17,7 +17,6 @@ yarn dev
 **📝 各要素の編集**
 1. テーブル内の編集対象をクリックしてドロワーを出現させる
 1. ドロワー内で任意の編集をする
-1. ドロワー下部の`submit`ボタンをクリックする
 
 **🌎 .xlsxファイルとして出力する**
 1. サイドバーから`export xlsx`ボタンをクリックする
@@ -42,7 +41,6 @@ And access [http://localhost:3000](http://localhost:3000)
 **📝 Editing Each Element**
 1. Click the item to edit in the table to open the drawer.
 1. Make your desired edits within the drawer.
-1. Click the `submit` button at the bottom of the drawer.
 
 **🌎 Exporting as an .xlsx File**
 1. Click the `export xlsx` button from the sidebar.
