@@ -3,22 +3,22 @@ import { markersAtom, markModeAtom } from '@/lib/jotai/atom'
 import { useAtom, useAtomValue } from 'jotai'
 import { MouseEvent, useCallback } from 'react'
 
-interface UseMarkersProps {
+type UseMarkersProps = {
   containerRef?: HTMLDivElement
 }
 
-interface UseMarkersReturn {
+type UseMarkersReturn = {
   addMarker: (e: MouseEvent<HTMLDivElement>) => void
   resetMarkers: () => void
 }
 
 export const useMarkers = ({ containerRef }: UseMarkersProps): UseMarkersReturn => {
-  const iii = useAtomValue(markModeAtom)
+  const isMarkingMode = useAtomValue(markModeAtom)
   const [markers, setMarkers] = useAtom(markersAtom)
 
   const addMarker = useCallback(
     (e: MouseEvent) => {
-      if (!containerRef.current || !iii) return
+      if (!containerRef.current || !isMarkingMode) return
 
       const rect = containerRef.current.getBoundingClientRect()
 
@@ -29,7 +29,7 @@ export const useMarkers = ({ containerRef }: UseMarkersProps): UseMarkersReturn 
 
       setMarkers((prev) => [...prev, newMarker])
     },
-    [markers, iii, containerRef, setMarkers],
+    [markers, isMarkingMode, containerRef, setMarkers],
   )
 
   const resetMarkers = useCallback(() => {

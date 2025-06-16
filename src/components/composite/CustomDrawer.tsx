@@ -5,8 +5,6 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTrigger } from '@/components
 import { DialogTitle } from '@radix-ui/react-dialog'
 
 export const CustomDrawer = () => {
-  console.log('')
-
   return (
     <Drawer direction="right">
       <DrawerTrigger asChild>

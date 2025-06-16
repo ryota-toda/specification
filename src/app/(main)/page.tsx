@@ -6,15 +6,13 @@ import { Description, Marker } from '@/types/markers'
 import ImageAnnotatorContainer from '@/features/image-upload/components/ImageAnnotationContainer'
 import { useCallback, useEffect } from 'react'
 import { useAtom, useAtomValue } from 'jotai'
-import { descriptionAtom, markersAtom } from '@/lib/jotai/atom'
+import { descriptionArrAtom, markersAtom } from '@/lib/jotai/atom'
 
 // <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
 
 export default function Home() {
   const markers = useAtomValue(markersAtom)
-  const [descriptions, setDescriptions] = useAtom(descriptionAtom)
-
-  console.log('markers', markers)
+  const [descriptions, setDescriptions] = useAtom(descriptionArrAtom)
 
   const hhh = (markers: Marker[]): Description | undefined => {
     if (markers.length === 0) return undefined
@@ -34,7 +32,7 @@ export default function Home() {
 
   const addDescriptions = useCallback(
     (mark: Marker[]) => {
-      setDescriptions((prev) => [...prev, hhh(mark)])
+      setDescriptions((prev) => (prev ? [...prev, hhh(mark)] : [hhh(mark)]))
     },
     [setDescriptions],
   )
@@ -50,9 +48,9 @@ export default function Home() {
     <div className="flex flex-col gap-4 w-full">
       <ImageAnnotatorContainer width="w-64" height="h-64" />
       <Separator />
+
       <div className="px-6">
         <DescriptionTable header={header} arr={descriptions} />
-        {/* <CustomTable header={header} arr={arr} /> */}
       </div>
     </div>
   )

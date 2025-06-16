@@ -1,4 +1,4 @@
-export interface Marker {
+export type Marker = {
   id: number
   x: number
   y: number
@@ -13,7 +13,7 @@ export interface Marker {
  *displayEvent: イベント
  *note:         備考
  * */
-export interface Description {
+export type Description = {
   id: number
   markerId: number | undefined
   name: string | undefined
@@ -32,7 +32,7 @@ export interface Description {
  *updater:  更新者
  *updated:  更新日
  * */
-export interface Field {
+export type Field = {
   id: string
   name: string
   creator: string

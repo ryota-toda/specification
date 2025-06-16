@@ -4,6 +4,7 @@ import { Label } from '@/components/ui/label'
 import { Sidebar, SidebarContent, SidebarFooter, SidebarGroup, SidebarHeader } from '@/components/ui/sidebar'
 import { Switch } from '@/components/ui/switch'
 import { markModeAtom } from '@/lib/jotai/atom'
+import clsx from 'clsx'
 import { useSetAtom } from 'jotai'
 
 const CustomSidebar = () => {
@@ -16,7 +17,7 @@ const CustomSidebar = () => {
         <SidebarGroup>er</SidebarGroup>
         <SidebarGroup>ty</SidebarGroup>
       </SidebarContent>
-      <SidebarFooter>
+      <SidebarFooter className={clsx('p-6')}>
         <div className="flex justify-center gap-4">
           <Switch id="mark" onClick={() => setMarkMode((prev) => !prev)} />
           <Label htmlFor="mark">markNumMode</Label>

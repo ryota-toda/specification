@@ -1,6 +1,5 @@
 'use client'
 
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from '@/components/ui/drawer'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
 export const CustomTable = <T extends Record<string, string | number | null>>({

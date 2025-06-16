@@ -3,7 +3,7 @@
 import { Drawer, DrawerTrigger } from '@/components/ui/drawer'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { CustomDrawerContents } from '@/features/description/components/CustomDrawerContents'
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 
 export const DescriptionTable = <T extends Record<string, string | number | undefined>>({
   header,
@@ -12,6 +12,8 @@ export const DescriptionTable = <T extends Record<string, string | number | unde
   header: string[]
   arr: T[]
 }) => {
+  const [selectedItem, setSelectedItem] = useState<T | null>(null)
+
   if (!arr || arr.length === 0) return <></>
 
   const keys = Object.keys(arr[0]) as Array<keyof T>
@@ -33,15 +35,17 @@ export const DescriptionTable = <T extends Record<string, string | number | unde
               <TableRow>
                 {keys.map((key, i) => (
                   <DrawerTrigger asChild key={i}>
-                    <TableCell key={`${index}_${String(key)}`}>{String(item[key])}</TableCell>
+                    <TableCell onClick={() => setSelectedItem(item)} key={`${index}_${String(key)}`}>
+                      {String(item[key])}
+                    </TableCell>
                   </DrawerTrigger>
                 ))}
               </TableRow>
-              <CustomDrawerContents data={item} />
             </Fragment>
           ))}
         </TableBody>
       </Table>
+      {selectedItem && <CustomDrawerContents data={selectedItem} />}
     </Drawer>
   )
 }
