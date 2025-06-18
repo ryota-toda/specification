@@ -1,16 +1,18 @@
 import { toPng } from 'html-to-image'
 
-export const useImageData = () => {
-  const exportImageData = async () => {
-    const imageNode = window.document.getElementById('image-container')
-    if (!imageNode) return
+type getImageDataReturn = {
+  dataUrl: string
+  width: number
+  height: number
+}
 
-    const dataUrl = await toPng(imageNode)
-    const width = imageNode.offsetWidth
-    const height = imageNode.offsetHeight
+export const getImageData = async (): Promise<getImageDataReturn | undefined> => {
+  const imageNode = window.document.getElementById('image-container')
+  if (!imageNode) return
 
-    return { dataUrl, width, height }
-  }
+  const dataUrl = await toPng(imageNode)
+  const width = imageNode.offsetWidth
+  const height = imageNode.offsetHeight
 
-  return exportImageData
+  return { dataUrl, width, height }
 }

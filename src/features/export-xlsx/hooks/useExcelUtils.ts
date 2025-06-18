@@ -1,9 +1,15 @@
-import ExcelJS, { Fill } from 'exceljs'
+import ExcelJS, { Fill, Worksheet } from 'exceljs'
 import { Description } from '@/types/markers'
+
+type getImageDataReturn = {
+  dataUrl: string
+  width: number
+  height: number
+}
 
 type GenerateExcelWorkbookProps = {
   data: Description[]
-  imageDataUrl: string
+  imageData?: getImageDataReturn
 }
 
 const SHEET_CONFIG = {
@@ -26,7 +32,7 @@ const SHEET_CONFIG = {
   mainDataHeaderRowNum: 4,
 
   dataKeys: ['markerId', 'name', 'type', 'displayData', 'displayEvent', 'note'],
-  startColumnIndex: 8,
+  startRowIndex: 44,
 
   headerFillColor: {
     type: 'pattern',
@@ -41,8 +47,22 @@ const SHEET_CONFIG = {
     right: { style: 'thin', color: { argb: 'FF000000' } },
   } as Partial<ExcelJS.Borders>,
 }
+const getCellRangePixelSize = (ws: Worksheet, startCol: number, startRow: number, endCol: number, endRow: number) => {
+  let rangeWidth = 0
+  for (let c = startCol; c <= endCol; c++) {
+    // NOTE: デフォルト文字幅に約7pxを掛ける (概算)
+    rangeWidth += (ws.getColumn(c + 1).width || 8.43) * 7
+  }
 
-export const generateXlsxWorkbook = async ({ data, imageDataUrl }: GenerateExcelWorkbookProps) => {
+  let rangeHeight = 0
+  for (let r = startRow; r <= endRow; r++) {
+    // NOTE: デフォルト15pt
+    rangeHeight += (ws.getRow(r + 1).height || 15) * (4 / 3)
+  }
+  return { width: rangeWidth, height: rangeHeight }
+}
+
+export const generateXlsxWorkbook = async ({ data, imageData }: GenerateExcelWorkbookProps) => {
   const wb = new ExcelJS.Workbook()
   wb.addWorksheet('画面設計書')
   const ws = wb.getWorksheet('画面設計書')
@@ -69,15 +89,38 @@ export const generateXlsxWorkbook = async ({ data, imageDataUrl }: GenerateExcel
     })
 
     // NOTE: 画像の追加
-    if (imageDataUrl) {
-      const imgId = wb.addImage({ base64: imageDataUrl, extension: 'png' })
-      ws.addImage(imgId, 'A4:F38')
+    if (imageData) {
+      const { dataUrl, width, height } = imageData
+
+      // NOTE: A4とF38を定義
+      const [targetStartCol, targetStartRow] = [0, 3]
+      const [targetEndCol, targetEndRow] = [5, 37]
+
+      const targetRangeSize = getCellRangePixelSize(ws, targetStartCol, targetStartRow, targetEndCol, targetEndRow)
+      const imageAspectRatio = width / height
+      const rangeAspectRatio = targetRangeSize.width / targetRangeSize.height
+
+      let [finalWidth, finalHeight] = [targetRangeSize.width, targetRangeSize.height]
+
+      if (imageAspectRatio > rangeAspectRatio) {
+        // 画像の方が横長の場合 (幅を基準に高さを調整)
+        finalHeight = targetRangeSize.width / imageAspectRatio
+      } else {
+        // 画像の方が縦長の場合 (高さを基準に幅を調整)
+        finalWidth = targetRangeSize.height * imageAspectRatio
+      }
+
+      const imgId = wb.addImage({ base64: dataUrl, extension: 'png' })
+      ws.addImage(imgId, {
+        tl: { col: targetStartCol, row: targetStartRow },
+        ext: { width: finalWidth, height: finalHeight },
+      })
     }
 
     // NOTE: データヘッダーの設定
-    const row = ws.getRow(SHEET_CONFIG.mainDataHeaderRowNum)
+    const row = ws.getRow(SHEET_CONFIG.startRowIndex)
     SHEET_CONFIG.mainDataHeaders.forEach((headerText, index) => {
-      const cell = row.getCell(index + 8) /* H列は8 */
+      const cell = row.getCell(index + 1)
       cell.fill = SHEET_CONFIG.headerFillColor
       cell.value = headerText
       cell.alignment = { vertical: 'middle', horizontal: 'center' }
@@ -86,10 +129,10 @@ export const generateXlsxWorkbook = async ({ data, imageDataUrl }: GenerateExcel
 
     // NOTE: データの設定
     data.forEach((item, rowIdx) => {
-      const row = ws.getRow(5 + rowIdx)
+      const row = ws.getRow(SHEET_CONFIG.startRowIndex + rowIdx + 1)
 
       SHEET_CONFIG.dataKeys.forEach((key, colIdx) => {
-        const cell = row.getCell(SHEET_CONFIG.startColumnIndex + colIdx)
+        const cell = row.getCell(colIdx + 1)
         cell.value = item[key]
         cell.border = SHEET_CONFIG.borderOption
       })
