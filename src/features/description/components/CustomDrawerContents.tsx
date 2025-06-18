@@ -4,7 +4,7 @@ import { DrawerContent, DrawerHeader, DrawerTitle } from '@/components/ui/drawer
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useEditDescription } from '@/features/description/hooks/useEditDescription'
-import { Description } from '@/types/markers'
+import { Description } from '@/types/description'
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 

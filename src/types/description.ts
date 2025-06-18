@@ -1,5 +1,6 @@
 /**
  *id:           項目ID
+ *markerId      type Markerのid
  *name:         項目名
  *type:         型
  *displayData:  表示データ
@@ -8,12 +9,13 @@
  * */
 export type Description = {
   id: number
-  name: string | null
-  type: string | null
-  displayData: string | null
-  displayEvent: string | null
-  note: string | null
-  [key: string]: string | number | null
+  markerId: number | undefined
+  name: string | undefined
+  type: string | undefined
+  displayData: string | undefined
+  displayEvent: string | undefined
+  note: string | undefined
+  [key: string]: string | number | undefined
 }
 
 /**

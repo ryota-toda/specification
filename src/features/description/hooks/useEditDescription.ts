@@ -1,5 +1,5 @@
 import { descriptionArrAtom } from '@/lib/jotai/atom'
-import { Description } from '@/types/markers'
+import { Description } from '@/types/description'
 import { useSetAtom } from 'jotai'
 import { ChangeEvent, useCallback } from 'react'
 

@@ -3,16 +3,19 @@
 import { Drawer, DrawerTrigger } from '@/components/ui/drawer'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { CustomDrawerContents } from '@/features/description/components/CustomDrawerContents'
+import { Description } from '@/types/description'
 import { Fragment, useState } from 'react'
+
+type DescriptionTableProps<T> = {
+  header: string[]
+  arr: T[]
+}
 
 export const DescriptionTable = <T extends Record<string, string | number | undefined>>({
   header,
   arr,
-}: {
-  header: string[]
-  arr: T[]
-}) => {
-  const [selectedItem, setSelectedItem] = useState<T | null>(null)
+}: DescriptionTableProps<T>) => {
+  const [selectedItem, setSelectedItem] = useState<Description | null>(null)
 
   if (!arr || arr.length === 0) return <></>
 
