@@ -1,24 +1,17 @@
-import { Marker } from '@/features/image-upload/types/marker'
-import { markersAtom, markModeAtom } from '@/lib/jotai/atom'
+import { Marker } from '@/types/markers'
+import { markersAtom, markingModeAtom } from '@/lib/jotai/atom'
 import { useAtom, useAtomValue } from 'jotai'
-import { MouseEvent, useCallback } from 'react'
+import { MouseEvent, RefObject, useCallback } from 'react'
 
-type UseMarkersProps = {
-  containerRef?: HTMLDivElement
-}
+type UseMarkersReturn = { addMarker: (e: MouseEvent, containerRef: RefObject<HTMLDivElement | null>) => void }
 
-type UseMarkersReturn = {
-  addMarker: (e: MouseEvent<HTMLDivElement>) => void
-  resetMarkers: () => void
-}
-
-export const useMarkers = ({ containerRef }: UseMarkersProps): UseMarkersReturn => {
-  const isMarkingMode = useAtomValue(markModeAtom)
+export const useMarkers = (): UseMarkersReturn => {
+  const isMarkingMode = useAtomValue(markingModeAtom)
   const [markers, setMarkers] = useAtom(markersAtom)
 
   const addMarker = useCallback(
-    (e: MouseEvent) => {
-      if (!containerRef.current || !isMarkingMode) return
+    (e: MouseEvent, containerRef: RefObject<HTMLDivElement | null>) => {
+      if (!containerRef?.current || !isMarkingMode) return
 
       const rect = containerRef.current.getBoundingClientRect()
 
@@ -29,12 +22,8 @@ export const useMarkers = ({ containerRef }: UseMarkersProps): UseMarkersReturn 
 
       setMarkers((prev) => [...prev, newMarker])
     },
-    [markers, isMarkingMode, containerRef, setMarkers],
+    [markers, isMarkingMode, setMarkers],
   )
 
-  const resetMarkers = useCallback(() => {
-    setMarkers([])
-  }, [setMarkers])
-
-  return { addMarker, resetMarkers }
+  return { addMarker }
 }

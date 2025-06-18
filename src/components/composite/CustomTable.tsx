@@ -2,13 +2,12 @@
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
-export const CustomTable = <T extends Record<string, string | number | null>>({
-  header,
-  arr,
-}: {
+type CustomTableProps<T> = {
   header: T[]
   arr: T[]
-}) => {
+}
+
+export const CustomTable = <T extends Record<string, string | number | null>>({ header, arr }: CustomTableProps<T>) => {
   if (!arr || arr.length === 0) return undefined
 
   const keys = Object.keys(arr[0]) as Array<keyof T>

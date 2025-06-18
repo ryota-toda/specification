@@ -11,7 +11,7 @@ yarn dev
 1. `クリックして画像を選択`をクリックして画像を選択
 
 **1️⃣ 番号を振る**
-1. サイドバー下部の`markNumMode`スイッチをオンにする
+1. サイドバー下部の`Marking Mode`スイッチをオンにする
 1. 画像内をクリックする
 
 **📝 各要素の編集**
@@ -35,7 +35,7 @@ And access [http://localhost:3000](http://localhost:3000)
 1. Click `Click to select image` to choose an image.
 
 **1️⃣ Numbering Elements**
-1. Turn on the `markNumMode` switch at the bottom of the sidebar.
+1. Turn on the `Marking Mode` switch at the bottom of the sidebar.
 1. Click inside the image.
 
 **📝 Editing Each Element**

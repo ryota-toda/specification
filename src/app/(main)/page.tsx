@@ -2,7 +2,8 @@
 
 import { Separator } from '@/components/ui/separator'
 import { DescriptionTable } from '@/features/description/components/DescriptionTable'
-import { Description, Marker } from '@/types/markers'
+import { Marker } from '@/types/markers'
+import { Description } from '@/types/description'
 import ImageAnnotatorContainer from '@/features/image-upload/components/ImageAnnotationContainer'
 import { useCallback, useEffect } from 'react'
 import { useAtom, useAtomValue } from 'jotai'
@@ -26,8 +27,8 @@ export default function Home() {
       markerId: lastItem.id,
       name: 'name',
       type: 'type',
-      displayData: 'displayData',
-      displayEvent: 'displayEvent',
+      displayData: 'data',
+      displayEvent: 'event',
       note: `${markers.length}`,
     }
   }
@@ -51,14 +52,15 @@ export default function Home() {
       <ImageAnnotatorContainer width="w-64" height="h-64" />
       <Separator />
 
-      <div className="px-6">
-        <DescriptionTable header={header} arr={descriptions} />
-      </div>
       {descriptions.length > 0 && (
         <div className={clsx('flex justify-end')}>
           <ExportButton />
         </div>
       )}
+
+      <div className="px-6">
+        <DescriptionTable header={header} arr={descriptions} />
+      </div>
     </div>
   )
 }

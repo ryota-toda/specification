@@ -1,13 +1,13 @@
 'use client'
 
 import clsx from 'clsx'
-import { ChangeEvent, FC, useCallback, useRef } from 'react'
+import { ChangeEvent, useCallback, useRef } from 'react'
 
 type ImageSelectorProps = {
   onImageSelect: (url: string) => void
 }
 
-export const ImageSelector: FC<ImageSelectorProps> = ({ onImageSelect }) => {
+export const ImageSelector = ({ onImageSelect }: ImageSelectorProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleClick = useCallback(() => {

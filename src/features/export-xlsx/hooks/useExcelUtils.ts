@@ -1,5 +1,6 @@
 import ExcelJS, { Fill, Worksheet } from 'exceljs'
-import { Description } from '@/types/markers'
+import { Description } from '@/types/description'
+import { DisplayData } from '@/types/display'
 
 type getImageDataReturn = {
   dataUrl: string
@@ -9,17 +10,19 @@ type getImageDataReturn = {
 
 type GenerateExcelWorkbookProps = {
   data: Description[]
+  displayData: DisplayData
   imageData?: getImageDataReturn
 }
 
 const SHEET_CONFIG = {
-  initialHeaders: [
+  initialHeaders: (display: DisplayData) => [
     { value: '画面', cell: 'A1', isHeader: true },
-    { value: 'tmpHoge', cell: 'B1' },
+    { value: display.id, cell: 'B1' },
     { value: '画面名', cell: 'A2', isHeader: true },
-    { value: 'tmpFuga', cell: 'B2' },
+    { value: display.name, cell: 'B2' },
     { value: '作成者', cell: 'C1', isHeader: true },
-    { value: 'tmpPiyo', cell: 'D1' },
+    { value: display.createdBy, cell: 'D1' },
+    // NOTE: ここから下は仮の値
     { value: '修正者', cell: 'C2', isHeader: true },
     { value: 'tmpBuzz', cell: 'D2' },
     { value: '作成日', cell: 'E1', isHeader: true },
@@ -62,7 +65,7 @@ const getCellRangePixelSize = (ws: Worksheet, startCol: number, startRow: number
   return { width: rangeWidth, height: rangeHeight }
 }
 
-export const generateXlsxWorkbook = async ({ data, imageData }: GenerateExcelWorkbookProps) => {
+export const generateXlsxWorkbook = async ({ data, displayData, imageData }: GenerateExcelWorkbookProps) => {
   const wb = new ExcelJS.Workbook()
   wb.addWorksheet('画面設計書')
   const ws = wb.getWorksheet('画面設計書')
@@ -80,7 +83,7 @@ export const generateXlsxWorkbook = async ({ data, imageData }: GenerateExcelWor
     ]
 
     // NOTE: 画面ヘッダーの設定
-    SHEET_CONFIG.initialHeaders.forEach(({ value, cell, isHeader }) => {
+    SHEET_CONFIG.initialHeaders(displayData).forEach(({ value, cell, isHeader }) => {
       const targetCell = ws.getCell(cell)
       if (isHeader) targetCell.fill = SHEET_CONFIG.headerFillColor
       targetCell.value = value
@@ -150,5 +153,5 @@ export const downLoadXlsx = ({ blob }: { blob: Blob }) => {
   a.download = 'tmp.xlsx'
   a.click()
   a.remove()
-  window.URL.revokeObjectURL(blob)
+  window.URL.revokeObjectURL(url)
 }
