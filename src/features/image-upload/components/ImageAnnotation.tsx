@@ -18,7 +18,12 @@ export const ImageAnnotation = ({ imageUrl }: ImageAnnotationProps) => {
   const { addMarker } = useMarkers({ containerRef })
 
   return (
-    <div ref={containerRef} className=" relative w-full h-full object-contains" onClick={addMarker}>
+    <div
+      id="image-container"
+      ref={containerRef}
+      className=" relative w-full h-full object-contains"
+      onClick={addMarker}
+    >
       <img src={imageUrl} alt="selected image" draggable={false} className="w-full h-full object-contain select-none" />
 
       {markers.map(({ id, x, y }) => (
