@@ -27,7 +27,7 @@ yarn dev
 1. ドロワー内で任意の編集をする
 
 **🌎 .xlsxファイルとして出力する**
-1. サイドバーから`export xlsx`ボタンをクリックする
+1. `export xlsx`ボタンをクリックする
 
 ---
 
@@ -51,4 +51,4 @@ And access [http://localhost:3000](http://localhost:3000)
 1. Make your desired edits within the drawer.
 
 **🌎 Exporting as an .xlsx File**
-1. Click the `export xlsx` button from the sidebar.
+1. Click the `export xlsx` button.
